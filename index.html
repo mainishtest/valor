@@ -634,7 +634,12 @@ h1,h2,h3,h4{font-family:'Playfair Display',Georgia,serif;line-height:1.2;color:v
       <div class="contact-form">
         <h3>Request a Free Consultation</h3>
         <p class="form-sub">Tell us about your project and we'll get back to you within 24 hours.</p>
-        <form onsubmit="event.preventDefault();alert('Thank you! We will be in touch within 24 hours.');">
+        <form id="contact-form" action="https://formsubmit.co/chad@buildingwithvalor.com" method="POST">
+          <input type="text" name="_gotcha" style="display:none">
+          <input type="hidden" name="_subject" value="New Lead from BuildingWithValor.com">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" value="https://buildingwithvalor.com#thank-you">
+          <input type="hidden" name="_template" value="table">
           <div class="form-row">
             <div class="form-group">
               <label for="name">Full Name *</label>
@@ -671,9 +676,14 @@ h1,h2,h3,h4{font-family:'Playfair Display',Georgia,serif;line-height:1.2;color:v
             <label for="details">Project Details</label>
             <textarea id="details" name="details" placeholder="Tell us about your project — location, size, timeline, budget range, or any other details that would be helpful."></textarea>
           </div>
-          <button type="submit" class="btn btn-primary form-submit">Request My Free Consultation</button>
+          <button type="submit" class="btn btn-primary form-submit" id="submit-btn">Request My Free Consultation</button>
           <p class="form-note">No obligation. We respond within 24 hours on business days.</p>
         </form>
+        <div id="thank-you" style="display:none;text-align:center;padding:60px 20px">
+          <div style="font-size:3rem;margin-bottom:16px">&#10003;</div>
+          <h3 style="margin-bottom:12px">Thank You!</h3>
+          <p style="color:var(--text-light)">We've received your request and will be in touch within 24 hours.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -714,6 +724,14 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
     if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
   });
 });
+
+// Show thank-you message after form submission redirect
+if(window.location.hash==='#thank-you'){
+  const form=document.getElementById('contact-form');
+  const ty=document.getElementById('thank-you');
+  if(form&&ty){form.style.display='none';ty.style.display='block';}
+  document.querySelector('#contact')?.scrollIntoView({behavior:'smooth'});
+}
 </script>
 </body>
 </html>
